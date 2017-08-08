@@ -12,6 +12,8 @@
 //   Uncomment the ones you want to try and experiment with.
 //
 //   These are from the scripting documentation: https://github.com/github/hubot/blob/master/docs/scripting.md
+//
+// LICENSE: AGPLv3
 
 var BOTNAME = '[**FreiburgerBot**]: ';
 var execSync = require('child_process').execSync;
@@ -47,7 +49,7 @@ module.exports = function(robot) {
 			// ms   * minute * 5
 			}, 1000 * 60 * 5);
 
-		} 
+		}
 	});
 
 	robot.hear(/cancel restart/i, function(res) {
