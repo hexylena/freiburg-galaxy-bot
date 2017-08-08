@@ -17,6 +17,8 @@ You can start FreiburgerBot locally by running:
 ROOM="Galaxy/Lobby" TOKEN=<your-personal-token> HUBOT_LOG_LEVEL=debug ./bin/hubot -a gitter
 ```
 
+the token can be obtained from https://developer.gitter.im/apps
+
 ## Running Under Your Account
 
 If you wish to run it under your account (i.e. it impresonates you) since gitter makes it complex to have multiple accounts / bot accounts...
