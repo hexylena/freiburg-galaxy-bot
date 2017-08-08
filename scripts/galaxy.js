@@ -41,7 +41,7 @@ module.exports = function(robot) {
 				if(serverRestart){
 					res.send(BOTNAME + "Restarting Galaxy");
 					t = execSync("ssh galaxy@galaxy.uni-freiburg.de 'cd galaxy-dist; . .venv/bin/activate; supervisorctl restart gx:'");
-					res.send(BOTNAME + "```\n" + t.toString() + "\n```\n");
+					res.send(BOTNAME + "\n```\n" + t.toString() + "\n```\n");
 					res.send(BOTNAME + "@" + serverRestart.owner + " the restart command finished. Please check that everything is OK.");
 				} else {
 					res.send(BOTNAME + "*coughs* hey @erasche, might be a bug here.");
