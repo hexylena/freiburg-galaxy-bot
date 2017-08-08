@@ -3,6 +3,8 @@
 //
 // Commands:
 //   hubot galaxy restart - restarts the Freiburg Galaxy server
+//   hubot galaxy message set  ... - sets a notice on the galaxy server
+//   hubot galaxy message hide - hides the message on next restart.
 //   hubot galaxy status - checks the status of the server
 //   cancel restart - Cancels any running restart.
 //
@@ -49,6 +51,30 @@ module.exports = function(robot) {
 			// ms   * minute * 5
 			}, 1000 * 60 * 5);
 
+		}
+	});
+
+	robot.respond(/message set (.*)/i, function(res) {
+		// The user issuing the request
+		requestingUser = res.message.user.username;
+		// Must be in the set of people who are permitted to restart the server.
+		if(permissions.restart.indexOf(requestingUser) > -1){
+			// Ensure the message is visible.
+			t = execSync("ssh galaxy@galaxy.uni-freiburg.de 'cd galaxy-dist; sed -i \"s/message_box_visible = .*/message_box_visible = True/\" config/galaxy.ini' ");
+			// And set it.
+			t = execSync("ssh galaxy@galaxy.uni-freiburg.de 'cd galaxy-dist; sed -i \"s/message_box_content = .*/" + res.match[1] + "/\" config/galaxy.ini' ");
+			res.send(BOTNAME + "@" + serverRestart.owner + " done. Please validate. (Quotes may be bad.)");
+		}
+	});
+
+	robot.respond(/message hide/i, function(res) {
+		// The user issuing the request
+		requestingUser = res.message.user.username;
+		// Must be in the set of people who are permitted to restart the server.
+		if(permissions.restart.indexOf(requestingUser) > -1){
+			// Ensure the message is visible.
+			t = execSync("ssh galaxy@galaxy.uni-freiburg.de 'cd galaxy-dist; sed -i \"s/message_box_visible = .*/message_box_visible = False/\" config/galaxy.ini' ");
+			res.send(BOTNAME + "@" + serverRestart.owner + " done.");
 		}
 	});
 
